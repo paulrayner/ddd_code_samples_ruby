@@ -6,4 +6,13 @@ class Product
     @make           = make
     @model          = model
   end
+
+  def ==(other)
+    self.class      == other.class &&
+    @name           == other.name &&
+    @serial_number  == other.serial_number &&
+    @make           == other.make &&
+    @model          == other.model
+  end
+  alias :eql? :==
 end

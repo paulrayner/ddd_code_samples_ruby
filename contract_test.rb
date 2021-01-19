@@ -9,6 +9,6 @@ class ContractTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product)
     assert_equal 100, contract.purchase_price
     assert_equal "PENDING", contract.status
-    assert_equal "Whirlpool", contract.covered_product.make
+    assert_equal Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0"), contract.covered_product
   end
 end

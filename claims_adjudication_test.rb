@@ -2,19 +2,23 @@ require "test/unit"
 require 'date'
 require_relative './claims_adjudication'
 
-class ClaimAdjudicationTest < Test::Unit::TestCase
+class ClaimsAdjudicationTest < Test::Unit::TestCase
+    def fake_contract
+      product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
+      contract = Contract.new(100.0, product)
+
+      contract.status          = "ACTIVE"
+      contract.effective_date  = Date.new(2010, 5, 8)
+      contract.expiration_date = Date.new(2012, 5, 8)
+
+      contract
+  end
 
   def test_claims_adjudication_for_valid_claim
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
-    contract.status          = "ACTIVE"
-
+    contract = fake_contract
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 1, contract.claims.length
@@ -23,77 +27,53 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
   end
 
   def test_claims_adjudication_for_invalid_claim_amount
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
-    contract.status          = "ACTIVE"
-
+    contract = fake_contract
     claim = Claim.new(81.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
 
   def test_claims_adjudication_for_pending_contract
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
-
+    contract = fake_contract
+    contract.status = "PENDING"
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
 
   def test_claims_adjudication_for_contract_prior_to_effective_date
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
-
+    contract = fake_contract
     claim = Claim.new(79.0, Date.new(2010, 5, 5))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
 
   def test_claims_adjudication_for_expired_contract
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
+    contract = fake_contract
     contract.status          = "EXPIRED"
 
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
 
-  def test_claims_adjudication_for_contract_after_to_expiration_date
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    contract = Contract.new(100.0, product)
-
-    contract.effective_date  = Date.new(2010, 5, 8)
-    contract.expiration_date = Date.new(2012, 5, 8)
-
+  def test_claims_adjudication_for_contract_after_expiration_date
+    contract = fake_contract
     claim = Claim.new(79.0, Date.new(2012, 5, 9))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
