@@ -3,7 +3,7 @@ require 'date'
 require_relative './claims_adjudication'
 require_relative './contract'
 
-class ClaimAdjudicationTest < Test::Unit::TestCase
+class ClaimsAdjudicationTest < Test::Unit::TestCase
 
   def test_claims_adjudication_for_valid_claim
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
@@ -12,7 +12,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 1, contract.claims.length
@@ -27,7 +27,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(81.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
@@ -40,7 +40,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(79.0, Date.new(2010, 5, 2))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
@@ -53,7 +53,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(79.0, Date.new(2010, 5, 5))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
@@ -66,7 +66,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(79.0, Date.new(2014, 5, 8))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
@@ -79,7 +79,7 @@ class ClaimAdjudicationTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
     claim    = Claim.new(79.0, Date.new(2013, 5, 9))
 
-    claim_adjudication = ClaimAdjudication.new
+    claim_adjudication = ClaimsAdjudication.new
     claim_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
