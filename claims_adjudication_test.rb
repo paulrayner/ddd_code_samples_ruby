@@ -18,8 +18,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     contract = fake_contract
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 1, contract.claims.length
     assert_equal 79.0, contract.claims.first.amount
@@ -30,8 +30,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     contract = fake_contract
     claim = Claim.new(81.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
@@ -41,8 +41,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     contract.status = "PENDING"
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
@@ -51,8 +51,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     contract = fake_contract
     claim = Claim.new(79.0, Date.new(2010, 5, 5))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
@@ -63,8 +63,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
 
     claim = Claim.new(79.0, Date.new(2010, 5, 8))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
@@ -73,8 +73,8 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     contract = fake_contract
     claim = Claim.new(79.0, Date.new(2012, 5, 9))
 
-    claim_adjudication = ClaimsAdjudication.new
-    claim_adjudication.adjudicate(contract, claim)
+    claims_adjudication = ClaimsAdjudication.new
+    claims_adjudication.adjudicate(contract, claim)
 
     assert_equal 0, contract.claims.length
   end
