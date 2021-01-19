@@ -36,7 +36,7 @@ class ContractTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
 
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
-    assert_equal 72.0, contract.limit_of_liability
+    assert_equal 70.0, contract.limit_of_liability
   end
 
   def test_limit_of_liability_multiple_claims
@@ -47,7 +47,7 @@ class ContractTest < Test::Unit::TestCase
 
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
     contract.claims << Claim.new(20.0, Date.new(2010, 10, 1))
-    assert_equal 56.0, contract.limit_of_liability
+    assert_equal 50.0, contract.limit_of_liability
   end
 
   def test_contract_equality
@@ -68,20 +68,6 @@ class ContractTest < Test::Unit::TestCase
     assert_equal contract1, contract3
   end
 
-  def test_terminate_contract
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
-
-    contract = Contract.new(100.0, product, terms_and_conditions)
-
-    contract.terminate
-    assert_equal "FULFILLED", contract.status(Date.today)
-    assert_equal 1, contract.events.length
-    assert_true contract.events[0].is_a? CustomerReimbursement
-    assert_equal Date.today, contract.events[0].date
-    assert_equal "Limit of Liability Exceeded", contract.events[0].reason
-  end
-
   def test_extend_annual_subscription
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
@@ -91,10 +77,6 @@ class ContractTest < Test::Unit::TestCase
     contract.extend_annual_subscription
 
     assert_equal TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2014, 5, 8), 90), contract.terms_and_conditions
-    assert_equal 1, contract.events.length
-    assert_equal Date.today, contract.events[0].date
-    assert_true contract.events[0].is_a? RenewedSubscription
-    assert_equal "Manual Renewal", contract.events[0].reason
   end
 
 end
