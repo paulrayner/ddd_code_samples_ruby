@@ -13,6 +13,8 @@ class Contract
   attr_accessor :status
   attr_accessor :claims
 
+  LIABILITY_PERCENTAGE = 0.8
+
   def initialize(purchase_price, covered_product, terms_and_conditions)
     @purchase_price       = purchase_price
     @covered_product      = covered_product
@@ -34,7 +36,7 @@ class Contract
     @claims.each { |claim|
       claim_total += claim.amount
     }
-    (@purchase_price - claim_total) * 0.8
+    (@purchase_price * LIABILITY_PERCENTAGE) - claim_total
   end
 
   def extend_annual_subscription

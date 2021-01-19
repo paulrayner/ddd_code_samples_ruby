@@ -36,7 +36,7 @@ class ContractTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
 
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
-    assert_equal 72.0, contract.limit_of_liability
+    assert_equal 70.0, contract.limit_of_liability
   end
 
   def test_limit_of_liability_multiple_claims
@@ -47,7 +47,7 @@ class ContractTest < Test::Unit::TestCase
 
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
     contract.claims << Claim.new(20.0, Date.new(2010, 10, 1))
-    assert_equal 56.0, contract.limit_of_liability
+    assert_equal 50.0, contract.limit_of_liability
   end
 
   def test_contract_equality
