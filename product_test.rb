@@ -12,10 +12,10 @@ class ProductTest < Test::Unit::TestCase
     assert_equal Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0"), product
   end
 
-  def test_terms_and_conditions_inequality
+  def test_product_inequality
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
 
-    # Demonstrates inequality by property comprehensively
+    # Demonstrates inequality by property
     assert_not_equal Product.new("stove", "OEUOEU23", "Whirlpool", "7DP840CWDB0"), product
     assert_not_equal Product.new("dishwasher", "EUOEUOE", "Whirlpool", "7DP840CWDB0"), product
     assert_not_equal Product.new("dishwasher", "OEUOEU23", "Maytag", "7DP840CWDB0"), product
