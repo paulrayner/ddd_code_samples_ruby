@@ -76,6 +76,7 @@ class ContractTest < Test::Unit::TestCase
     assert_equal "Manual Renewal", contract.events[0].reason
   end
 
+  # TODO: Practice using domain events by making this test pass
   def test_terminate_contract
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
@@ -83,11 +84,11 @@ class ContractTest < Test::Unit::TestCase
     contract = Contract.new(100.0, product, terms_and_conditions)
 
     contract.terminate("Debbie")
-    assert_equal "FULFILLED", contract.status(Date.today)
     assert_equal 1, contract.events.length
     assert_true contract.events[0].is_a? CustomerReimbursementRequested
     assert_equal Date.today, contract.events[0].occurred_on
     assert_equal "Debbie", contract.events[0].rep_name
     assert_equal "Limit of Liability Exceeded", contract.events[0].reason
+    assert_equal "FULFILLED", contract.status(Date.today)
   end
 end

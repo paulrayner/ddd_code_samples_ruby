@@ -1,6 +1,5 @@
 require_relative './product'
 require_relative './terms_and_conditions'
-require_relative './customer_reimbursement_requested'
 require_relative './subscription_renewed'
 
 class Contract
@@ -26,11 +25,7 @@ class Contract
   end
 
   def status(current_date)
-    if @events.any? {|event| event.is_a? CustomerReimbursementRequested}
-      "FULFILLED"
-    else
-      @terms_and_conditions.status(current_date)
-    end
+    @terms_and_conditions.status(current_date)
   end
 
   def limit_of_liability()
@@ -44,11 +39,6 @@ class Contract
   def extend_annual_subscription
     @terms_and_conditions = @terms_and_conditions.annually_extended
     @events << SubscriptionRenewed.new("Manual Renewal")
-  end
-
-  def terminate(rep_name)
-    @events << CustomerReimbursementRequested.new("Limit of Liability Exceeded",
-                                                  rep_name)
   end
 
   def ==(other)
