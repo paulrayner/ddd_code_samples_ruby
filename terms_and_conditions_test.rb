@@ -26,24 +26,24 @@ class TermsAndConditionsTest < Test::Unit::TestCase
   def test_terms_and_conditions_status_pending
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2012, 5, 8), 30)
 
-    assert_true  terms_and_conditions.is_pending(Date.new(2010, 5, 7))
-    assert_false terms_and_conditions.is_pending(Date.new(2010, 5, 8))
+    assert_true  terms_and_conditions.pending?(Date.new(2010, 5, 7))
+    assert_false terms_and_conditions.pending?(Date.new(2010, 5, 8))
   end
 
   def test_terms_and_conditions_status_active
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2012, 5, 8), 30)
 
-    assert_false terms_and_conditions.is_active(Date.new(2010, 5, 7))
-    assert_true  terms_and_conditions.is_active(Date.new(2010, 5, 8))
-    assert_true  terms_and_conditions.is_active(Date.new(2012, 5, 8))
-    assert_false terms_and_conditions.is_active(Date.new(2012, 5, 9))
+    assert_false terms_and_conditions.active?(Date.new(2010, 5, 7))
+    assert_true  terms_and_conditions.active?(Date.new(2010, 5, 8))
+    assert_true  terms_and_conditions.active?(Date.new(2012, 5, 8))
+    assert_false terms_and_conditions.active?(Date.new(2012, 5, 9))
   end
 
   def test_terms_and_conditions_status_expired
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2012, 5, 8), 30)
 
-    assert_false terms_and_conditions.is_expired(Date.new(2012, 5, 8))
-    assert_true  terms_and_conditions.is_expired(Date.new(2012, 5, 9))
+    assert_false terms_and_conditions.expired?(Date.new(2012, 5, 8))
+    assert_true  terms_and_conditions.expired?(Date.new(2012, 5, 9))
   end
 
   def test_terms_and_conditions_status

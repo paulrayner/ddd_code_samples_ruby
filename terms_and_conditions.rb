@@ -14,27 +14,27 @@ class TermsAndConditions < ValueObject
   end
 
   def status(current_date)
-    if is_pending(current_date)
+    if pending?(current_date)
       "PENDING"
-    elsif is_active(current_date)
+    elsif active?(current_date)
       "ACTIVE"
-    elsif is_expired(current_date)
+    elsif expired?(current_date)
       "EXPIRED"
     else
       "UNKNOWN"
     end
   end
 
-  def is_pending(current_date)
+  def pending?(current_date)
     return current_date < @effective_date
   end
 
-  def is_active(current_date)
+  def active?(current_date)
     return current_date >= @effective_date &&
            current_date <= @expiration_date
   end
 
-  def is_expired(current_date)
+  def expired?(current_date)
     return current_date > @expiration_date
   end
 
