@@ -2,7 +2,8 @@ require_relative './product'
 require_relative './terms_and_conditions'
 
 class Contract
-  attr_accessor :id # unique id (assigned automatically)
+  attr_reader   :id # unique id
+
   attr_reader   :purchase_price
   attr_reader   :covered_product
   attr_reader   :terms_and_conditions
@@ -13,6 +14,7 @@ class Contract
   LIABILITY_PERCENTAGE = 0.8
 
   def initialize(purchase_price, covered_product, terms_and_conditions)
+    @id                   = SecureRandom.uuid
     @purchase_price       = purchase_price
     @covered_product      = covered_product
     @terms_and_conditions = terms_and_conditions

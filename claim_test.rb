@@ -23,4 +23,13 @@ class ClaimTest < Test::Unit::TestCase
     assert_equal 45.0, claim.repair_pos[0].line_items[0].amount
     assert_equal "Replacement part for soap dispenser", claim.repair_pos[0].line_items[0].description
   end
+
+    def test_claim_equality
+      claim1 = Claim.new(150.0, Date.new(2010, 5, 8))
+      claim2 = Claim.new(150.0, Date.new(2010, 5, 8))
+
+      # entities compare by unique IDs, not properties
+      assert_not_equal claim1, claim2
+    end
+
 end
