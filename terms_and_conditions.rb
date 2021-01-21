@@ -40,7 +40,7 @@ class TermsAndConditions < ValueObject
     return current_date > @expiration_date
   end
 
-  def annually_extended()
+  def annually_extended
     return TermsAndConditions.new(@effective_date, @purchase_date, @expiration_date.next_year(1), @in_store_guarantee_days)
   end
 end

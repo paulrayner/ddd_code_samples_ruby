@@ -26,7 +26,7 @@ class Contract
     @terms_and_conditions.status(current_date)
   end
 
-  def limit_of_liability()
+  def limit_of_liability
     claim_total = 0.0
     @claims.each { |claim|
       claim_total += claim.amount
