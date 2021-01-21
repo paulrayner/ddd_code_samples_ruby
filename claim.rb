@@ -15,4 +15,8 @@ class Claim
     @date       = date
     @repair_pos = Array.new
   end
+
+  def ==(other)
+    self.id == other.id
+  end
 end
