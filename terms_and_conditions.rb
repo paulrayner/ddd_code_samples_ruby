@@ -14,17 +14,15 @@ class TermsAndConditions < ValueObject
   end
 
   def status(current_date)
-    current_status = "UNKNOWN"
     if is_pending(current_date)
-      current_status = "PENDING"
+      "PENDING"
     elsif is_active(current_date)
-      current_status = "ACTIVE"
+      "ACTIVE"
     elsif is_expired(current_date)
-      current_status = "EXPIRED"
+      "EXPIRED"
     else
-      current_status = "UNKNOWN"
+      "UNKNOWN"
     end
-    current_status
   end
 
   def is_pending(current_date)
