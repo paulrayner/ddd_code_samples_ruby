@@ -27,10 +27,8 @@ class Contract
   end
 
   def limit_of_liability
-    claim_total = 0.0
-    @claims.each { |claim|
-      claim_total += claim.amount
-    }
+    claim_total = @claims.sum(&:amount)
+
     (@purchase_price * LIABILITY_PERCENTAGE) - claim_total
   end
 
