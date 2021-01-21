@@ -74,11 +74,12 @@ class ContractTest < Test::Unit::TestCase
 
     contract = Contract.new(100.0, product, terms_and_conditions)
 
-    contract.terminate
+    contract.terminate("Debbie")
     assert_equal "FULFILLED", contract.status(Date.today)
     assert_equal 1, contract.events.length
-    assert_true contract.events[0].is_a? CustomerReimbursement
-    assert_equal Date.today, contract.events[0].date
+    assert_true contract.events[0].is_a? CustomerReimbursementRequested
+    assert_equal Date.today, contract.events[0].occurred_on
+    assert_equal "Debbie", contract.events[0].rep_name
     assert_equal "Limit of Liability Exceeded", contract.events[0].reason
   end
 
@@ -92,8 +93,8 @@ class ContractTest < Test::Unit::TestCase
 
     assert_equal TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2014, 5, 8), 90), contract.terms_and_conditions
     assert_equal 1, contract.events.length
-    assert_equal Date.today, contract.events[0].date
-    assert_true contract.events[0].is_a? RenewedSubscription
+    assert_equal Date.today, contract.events[0].occurred_on
+    assert_true contract.events[0].is_a? SubscriptionRenewed
     assert_equal "Manual Renewal", contract.events[0].reason
   end
 
