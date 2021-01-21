@@ -55,17 +55,10 @@ class ContractTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract1 = Contract.new(100.0, product, terms_and_conditions)
-    contract1.id = 100
-
     contract2 = Contract.new(100.0, product, terms_and_conditions)
-    contract2.id = 101
-
-    contract3 = Contract.new(100.0, product, terms_and_conditions)
-    contract3.id = 100
 
     # entities compare by unique IDs, not properties
     assert_not_equal contract1, contract2
-    assert_equal contract1, contract3
   end
 
   def test_terminate_contract

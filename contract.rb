@@ -4,8 +4,8 @@ require_relative './customer_reimbursement_requested'
 require_relative './subscription_renewed'
 
 class Contract
-  attr_accessor :id # unique id
-  
+  attr_reader   :id # unique id
+
   attr_reader   :purchase_price
   attr_reader   :covered_product
   attr_reader   :terms_and_conditions
