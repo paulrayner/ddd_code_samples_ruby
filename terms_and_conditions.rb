@@ -26,19 +26,19 @@ class TermsAndConditions < ValueObject
   end
 
   def pending?(current_date)
-    return current_date < @effective_date
+    current_date < @effective_date
   end
 
   def active?(current_date)
-    return current_date >= @effective_date &&
+    current_date >= @effective_date &&
            current_date <= @expiration_date
   end
 
   def expired?(current_date)
-    return current_date > @expiration_date
+    current_date > @expiration_date
   end
 
   def annually_extended
-    return TermsAndConditions.new(@effective_date, @purchase_date, @expiration_date.next_year(1), @in_store_guarantee_days)
+    TermsAndConditions.new(@effective_date, @purchase_date, @expiration_date.next_year(1), @in_store_guarantee_days)
   end
 end
