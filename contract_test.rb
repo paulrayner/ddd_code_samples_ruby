@@ -50,15 +50,19 @@ class ContractTest < Test::Unit::TestCase
     assert_equal 50.0, contract.limit_of_liability
   end
 
+  # entities compare by unique IDs, not properties
   def test_contract_equality
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
+    contract = Contract.new(100.0, product, terms_and_conditions)
 
-    contract1 = Contract.new(100.0, product, terms_and_conditions)
-    contract2 = Contract.new(100.0, product, terms_and_conditions)
+    contract_same_id         = contract.clone
+    contract_same_id.status  = "ACTIVE"
 
-    # entities compare by unique IDs, not properties
-    assert_not_equal contract1, contract2
+    assert_equal     contract, contract_same_id
+
+    contract_different_id = Contract.new(100.0, product, terms_and_conditions)
+    assert_not_equal contract, contract_different_id
   end
 
   def test_extend_annual_subscription
