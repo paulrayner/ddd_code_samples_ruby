@@ -77,7 +77,8 @@ class ContractTest < Test::Unit::TestCase
     assert_equal 1, contract.events.length
     assert_equal Date.today, contract.events[0].occurred_on
     assert_true contract.events[0].is_a? SubscriptionRenewed
-    assert_equal "Manual Renewal", contract.events[0].reason
+    assert_equal "Automatic Annual Renewal", contract.events[0].reason
+    assert_equal contract.id, contract.events[0].contract_id
   end
 
   # TODO: Practice using domain events by making this test pass

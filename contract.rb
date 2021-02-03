@@ -38,7 +38,7 @@ class Contract
 
   def extend_annual_subscription
     @terms_and_conditions = @terms_and_conditions.annually_extended
-    @events << SubscriptionRenewed.new("Manual Renewal")
+    @events << SubscriptionRenewed.new(id, "Automatic Annual Renewal")
   end
 
   def ==(other)
