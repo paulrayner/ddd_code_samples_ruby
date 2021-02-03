@@ -1,7 +1,7 @@
 class RepairPO
   attr_accessor :line_items
 
-  def initialize()
+  def initialize
     @line_items = Array.new
   end
 end
