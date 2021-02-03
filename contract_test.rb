@@ -88,12 +88,13 @@ class ContractTest < Test::Unit::TestCase
 
     contract = Contract.new(100.0, product, terms_and_conditions)
 
-    contract.terminate("Debbie")
+    contract.terminate("Debbie", "Limit of Liability Exceeded")
     assert_equal 1, contract.events.length
     assert_true contract.events[0].is_a? CustomerReimbursementRequested
     assert_equal Date.today, contract.events[0].occurred_on
     assert_equal "Debbie", contract.events[0].rep_name
     assert_equal "Limit of Liability Exceeded", contract.events[0].reason
+    assert_equal contract.id, contract.events[0].contract_id
     assert_equal "FULFILLED", contract.status(Date.today)
   end
 end
