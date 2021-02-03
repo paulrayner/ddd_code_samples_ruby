@@ -14,33 +14,31 @@ class TermsAndConditions < ValueObject
   end
 
   def status(current_date)
-    current_status = "UNKNOWN"
     if pending?(current_date)
-      current_status = "PENDING"
+      "PENDING"
     elsif active?(current_date)
-      current_status = "ACTIVE"
+      "ACTIVE"
     elsif expired?(current_date)
-      current_status = "EXPIRED"
+      "EXPIRED"
     else
-      current_status = "UNKNOWN"
+      "UNKNOWN"
     end
-    current_status
   end
 
   def pending?(current_date)
-    return current_date < @effective_date
+    current_date < @effective_date
   end
 
   def active?(current_date)
-    return current_date >= @effective_date &&
-           current_date <= @expiration_date
+    current_date >= @effective_date &&
+    current_date <= @expiration_date
   end
 
   def expired?(current_date)
-    return current_date > @expiration_date
+    current_date > @expiration_date
   end
 
   def annually_extended()
-    return TermsAndConditions.new(@effective_date, @purchase_date, @expiration_date.next_year(1), @in_store_guarantee_days)
+    TermsAndConditions.new(@effective_date, @purchase_date, @expiration_date.next_year(1), @in_store_guarantee_days)
   end
 end
