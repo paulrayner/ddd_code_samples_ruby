@@ -2,12 +2,14 @@ require 'date'
 
 class CustomerReimbursementRequested
   attr_reader   :occurred_on
-  attr_reader   :reason
+  attr_reader   :contract_id
   attr_reader   :rep_name
+  attr_reader   :reason
 
-  def initialize(reason, rep_name)
+  def initialize(contract_id, rep_name, reason)
     @occurred_on = Date.today
-    @reason      = reason
+    @contract_id = contract_id
     @rep_name    = rep_name
+    @reason      = reason
   end
 end

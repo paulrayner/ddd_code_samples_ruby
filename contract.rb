@@ -46,9 +46,8 @@ class Contract
     @events << SubscriptionRenewed.new(id, "Automatic Annual Renewal")
   end
 
-  def terminate(rep_name)
-    @events << CustomerReimbursementRequested.new("Limit of Liability Exceeded",
-                                                  rep_name)
+  def terminate(rep_name, reason)
+    @events << CustomerReimbursementRequested.new(id, rep_name, reason)
   end
 
   def ==(other)
