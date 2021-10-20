@@ -1,5 +1,10 @@
 require 'securerandom'
 
+
+# Claim represents a request for a benefit on an extended warranty. It contains
+# a set of purchase orders that provide information about any repairs and
+# associated costs that may have occurred for a claim.
+
 class Claim
   attr_reader   :id # unique id
 
