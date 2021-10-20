@@ -22,6 +22,9 @@ class ClaimTest < Test::Unit::TestCase
     assert_equal "PARTS", claim.repair_pos[0].line_items[0].type
     assert_equal 45.0, claim.repair_pos[0].line_items[0].amount
     assert_equal "Replacement part for soap dispenser", claim.repair_pos[0].line_items[0].description
+    assert_equal "LABOR", claim.repair_pos[0].line_items[1].type
+    assert_equal 50.0, claim.repair_pos[0].line_items[1].amount
+    assert_equal "1 hour repair", claim.repair_pos[0].line_items[1].description
   end
 
   # entities compare by unique IDs, not properties
