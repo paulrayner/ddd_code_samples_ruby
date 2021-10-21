@@ -2,6 +2,11 @@ require 'securerandom'
 
 require_relative './product'
 
+# Contract represents an extended warranty for a covered product.
+# A contract is in a PENDING state prior to the effective date,
+# ACTIVE between effective and expiration dates, and EXPIRED after
+# the expiration date.
+
 class Contract
   attr_reader   :id # unique id
   attr_reader   :purchase_price
