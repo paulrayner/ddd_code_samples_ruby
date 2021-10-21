@@ -18,14 +18,14 @@ class ClaimsAdjudication
     end
   end
 
-# These two new methods we've added seem to be responsibilities of Contract.
-# Let's move them...
+  LIABILITY_PERCENTAGE = 0.8
+
   def limit_of_liability(contract)
     claim_total = 0.0
     contract.claims.each { |claim|
       claim_total += claim.amount
     }
-    (contract.purchase_price - claim_total) * 0.8
+    (contract.purchase_price - claim_total) * LIABILITY_PERCENTAGE
   end
 
   def current_status(contract, current_date)
