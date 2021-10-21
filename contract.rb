@@ -2,6 +2,11 @@ require_relative './product'
 require_relative './terms_and_conditions'
 require_relative './subscription_renewed'
 
+# Contract represents an extended warranty for a covered product.
+# A contract is in a PENDING state prior to the effective date,
+# ACTIVE between effective and expiration dates, and EXPIRED after
+# the expiration date.
+
 class Contract
   attr_reader   :id # unique id
 
