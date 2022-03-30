@@ -6,6 +6,12 @@ We are going to pretend that we are on the warranty application team for an exte
 
 N.b.: This code has a lot of issues. This is deliberate. For example, the majority of the objects are devoid of behavior and there is little documentation. Also, the tests are incomplete, poorly named, duplicated, and intermixed with the production code. Try to accept that we are not going to fix most of the issues. Instead, focus on applying the techniques and patterns taught in the workshop to see the impact they can have.
 
-Run unit tests via the command line with the test file name:
+## Run Unit Tests
+
+Run unit tests via the command line as follows:
 
     $ ruby contract_test.rb
+
+or
+
+    $ ruby all_tests.rb
