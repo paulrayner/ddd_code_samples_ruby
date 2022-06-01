@@ -10,6 +10,7 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract = Contract.new(100.0, product, terms_and_conditions)
+    contract.status = "ACTIVE"
     claim    = Claim.new(79.0, Date.new(2010, 5, 8))
 
     claims_adjudication = ClaimsAdjudication.new
@@ -25,6 +26,7 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract = Contract.new(100.0, product, terms_and_conditions)
+    contract.status = "ACTIVE"
     claim    = Claim.new(81.0, Date.new(2010, 5, 8))
 
     claims_adjudication = ClaimsAdjudication.new

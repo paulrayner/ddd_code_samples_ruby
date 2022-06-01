@@ -20,6 +20,7 @@ class Contract
 
   def initialize(purchase_price, covered_product, terms_and_conditions)
     @id                   = SecureRandom.uuid
+    @status               = "PENDING"
     @purchase_price       = purchase_price
     @covered_product      = covered_product
     @terms_and_conditions = terms_and_conditions
@@ -27,16 +28,30 @@ class Contract
     @events               = Array.new
   end
 
-  def status(current_date)
-    @terms_and_conditions.status(current_date)
+  def covers?(claim)
+    in_effect_for?(claim.date) &&
+    within_limit_of_liability?(claim.amount)
+  end
+
+  def within_limit_of_liability?(amount)
+    amount < limit_of_liability()
+  end
+
+  def in_effect_for?(current_date)
+    @terms_and_conditions.active?(current_date) &&
+    @status == "ACTIVE"
   end
 
   def limit_of_liability()
+    (@purchase_price * LIABILITY_PERCENTAGE) - claim_total()
+  end
+
+  def claim_total()
     claim_total = 0.0
     @claims.each { |claim|
       claim_total += claim.amount
     }
-    (@purchase_price * LIABILITY_PERCENTAGE) - claim_total
+    claim_total
   end
 
   def extend_annual_subscription
