@@ -106,8 +106,8 @@ class ContractTest < Test::Unit::TestCase
     assert_true contract.events[0].is_a? CustomerReimbursementRequested
     assert_equal Date.today, contract.events[0].occurred_on
     assert_equal "Debbie", contract.events[0].rep_name
-    assert_equal "Limit of Liability Exceeded", contract.events[0].reason
     assert_equal contract.id, contract.events[0].contract_id
-    assert_equal "FULFILLED", contract.status(Date.today)
+    assert_equal "Limit of Liability Exceeded", contract.events[0].reason
+    assert_false contract.in_effect_for?(Date.today)
   end
 end
