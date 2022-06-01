@@ -63,21 +63,6 @@ class ContractTest < Test::Unit::TestCase
     assert_equal 50.0, contract.limit_of_liability
   end
 
-  # entities compare by unique IDs, not properties
-  def test_contract_equality
-    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
-    terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
-    contract = Contract.new(100.0, product, terms_and_conditions)
-
-    contract_same_id         = contract.clone
-    contract_same_id.status  = "ACTIVE"
-
-    assert_equal     contract, contract_same_id
-
-    contract_different_id = Contract.new(100.0, product, terms_and_conditions)
-    assert_not_equal contract, contract_different_id
-  end
-
   def test_extend_annual_subscription
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
@@ -109,5 +94,20 @@ class ContractTest < Test::Unit::TestCase
     assert_equal contract.id, contract.events[0].contract_id
     assert_equal "Limit of Liability Exceeded", contract.events[0].reason
     assert_false contract.in_effect_for?(Date.today)
+  end
+
+  # entities compare by unique IDs, not properties
+  def test_contract_equality
+    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
+    terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
+    contract = Contract.new(100.0, product, terms_and_conditions)
+
+    contract_same_id         = contract.clone
+    contract_same_id.status  = "ACTIVE"
+
+    assert_equal     contract, contract_same_id
+
+    contract_different_id = Contract.new(100.0, product, terms_and_conditions)
+    assert_not_equal contract, contract_different_id
   end
 end
