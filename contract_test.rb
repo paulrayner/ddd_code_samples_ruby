@@ -39,7 +39,29 @@ class ContractTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract = Contract.new(100.0, product, terms_and_conditions)
+    
     assert_equal 80.0, contract.limit_of_liability
+  end
+
+  def test_claims_total
+    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
+    terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
+
+    contract = Contract.new(100.0, product, terms_and_conditions)
+    contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
+
+    assert_equal 10.0, contract.claim_total()
+  end
+
+  def test_claims_total_is_sum_of_claim_amounts
+    product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
+    terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
+
+    contract = Contract.new(100.0, product, terms_and_conditions)
+    contract.claims << Claim.new(20.0, Date.new(2010, 10, 1))
+    contract.claims << Claim.new(23.0, Date.new(2010, 10, 1))
+
+    assert_equal 43.0, contract.claim_total()
   end
 
   def test_limit_of_liability_one_claim
@@ -47,9 +69,13 @@ class ContractTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract = Contract.new(100.0, product, terms_and_conditions)
-
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
+
     assert_equal 70.0, contract.limit_of_liability
+    assert_true  contract.within_limit_of_liability?(10.0)
+    assert_true  contract.within_limit_of_liability?(69.0)
+    assert_false contract.within_limit_of_liability?(70.0)
+    assert_false contract.within_limit_of_liability?(80.0)
   end
 
   def test_limit_of_liability_multiple_claims
@@ -57,10 +83,14 @@ class ContractTest < Test::Unit::TestCase
     terms_and_conditions = TermsAndConditions.new(Date.new(2010, 5, 8), Date.new(2010, 5, 8), Date.new(2013, 5, 8), 90)
 
     contract = Contract.new(100.0, product, terms_and_conditions)
-
     contract.claims << Claim.new(10.0, Date.new(2010, 10, 1))
     contract.claims << Claim.new(20.0, Date.new(2010, 10, 1))
+
     assert_equal 50.0, contract.limit_of_liability
+    assert_true  contract.within_limit_of_liability?(10.0)
+    assert_true  contract.within_limit_of_liability?(49.0)
+    assert_false contract.within_limit_of_liability?(50.0)
+    assert_false contract.within_limit_of_liability?(80.0)
   end
 
   def test_extend_annual_subscription
@@ -78,7 +108,7 @@ class ContractTest < Test::Unit::TestCase
     assert_equal "Automatic Annual Renewal", contract.events[0].reason
     assert_equal contract.id, contract.events[0].contract_id
   end
-
+  
   # TODO: Practice using domain events by making this test pass
   def test_terminate_contract
     product  = Product.new("dishwasher", "OEUOEU23", "Whirlpool", "7DP840CWDB0")
