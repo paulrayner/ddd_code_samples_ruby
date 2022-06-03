@@ -123,6 +123,8 @@ class ContractTest < Test::Unit::TestCase
     assert_equal contract.id, contract.events[0].contract_id
     assert_equal "Limit of Liability Exceeded", contract.events[0].reason
     assert_false contract.in_effect_for?(Date.today)
+    assert_equal "FULFILLED", contract.status
+  # Show an alternate way, using events to derive current state
     assert_equal "FULFILLED", contract.status_derived(Date.today)
   end
 
