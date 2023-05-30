@@ -12,11 +12,11 @@ class Contract
   attr_reader   :purchase_price
   attr_reader   :covered_product
 
-  attr_accessor :status
   attr_accessor :purchase_date
   attr_accessor :effective_date
   attr_accessor :expiration_date
-  attr_accessor :in_store_guarantee_days
+
+  attr_accessor :status
 
   attr_accessor :claims
 
