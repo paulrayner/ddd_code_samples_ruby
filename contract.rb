@@ -31,7 +31,7 @@ class Contract
   end
 
   def covers?(claim)
-    in_effect_for?(claim.date) &&
+    in_effect_for?(claim.failure_date) &&
     within_limit_of_liability?(claim.amount)
   end
 
