@@ -7,18 +7,15 @@ require 'securerandom'
 
 class Claim
   attr_reader   :id # unique id
-
-  attr_reader   :amount
-  attr_reader   :date
-
+  attr_reader   :amount, :failure_date
   attr_accessor :repair_pos
   attr_accessor :status
 
-  def initialize(amount, date)
-    @id         = SecureRandom.uuid
-    @amount     = amount
-    @date       = date
-    @repair_pos = Array.new
+  def initialize(amount, failure_date)
+    @id           = SecureRandom.uuid
+    @amount       = amount
+    @failure_date = failure_date
+    @repair_pos   = Array.new
   end
 
   def ==(other)

@@ -17,7 +17,7 @@ class ClaimTest < Test::Unit::TestCase
     claim.repair_pos << repair_po
 
     assert_equal 150.0, claim.amount
-    assert_equal Date.new(2010, 5, 8), claim.date
+    assert_equal Date.new(2010, 5, 8), claim.failure_date
 
     assert_equal "PARTS", claim.repair_pos[0].line_items[0].type
     assert_equal 45.0, claim.repair_pos[0].line_items[0].amount
