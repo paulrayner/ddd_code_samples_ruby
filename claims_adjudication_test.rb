@@ -21,7 +21,7 @@ class ClaimsAdjudicationTest < Test::Unit::TestCase
 
     assert_equal 1, contract.claims.length
     assert_equal 79.0, contract.claims.first.amount
-    assert_equal Date.new(2010, 5, 8), contract.claims.first.date
+    assert_equal Date.new(2010, 5, 8), contract.claims.first.failure_date
   end
 
   def test_claims_adjudication_for_invalid_claim_amount
